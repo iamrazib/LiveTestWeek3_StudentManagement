@@ -1,0 +1,90 @@
+﻿@model IEnumerable<StudentManagementMVC.Models.Student>
+@{
+    ViewData["Title"] = "Students (Age > 18)";
+    var search = ViewBag.Search as string;
+    int filteredCount = ViewBag.FilteredCount ?? 0;
+    int totalCount = ViewBag.TotalCount ?? 0;
+}
+
+<div class="container">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        @* <h1 class="h4 mb-0 text-primary">
+            <i class="bi bi-people-fill me-2"></i> Students (Age &gt; 18)
+        </h1> *@
+
+        <h1 class="h5 mb-0 text-primary">
+            <i class="bi bi-people-fill me-2"></i> Student Management System
+        </h1>
+        <a class="btn btn-success" asp-action="Create">
+            <i class="bi bi-plus-circle me-1"></i> Add Student
+        </a>
+    </div>
+
+    <!-- Search Form -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <form asp-action="Index" method="get" class="row g-3">
+                <div class="col-md-6 col-lg-4">
+                    <input class="form-control" type="text" name="search" value="@search" placeholder="Search by first or last name..." />
+                </div>
+                <div class="col-auto">
+                    <button class="btn btn-primary" type="submit">
+                        <i class="bi bi-search me-1"></i> Search
+                    </button>
+                </div>
+                <div class="col-auto">
+                    <a class="btn btn-outline-secondary" asp-action="Index">
+                        <i class="bi bi-arrow-repeat me-1"></i> Reset
+                    </a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    
+    <div class="mb-3 text-muted">
+        <strong>Showing:</strong> @filteredCount students (Age &gt; 18)
+        <span class="mx-2">|</span>
+        <strong>Total:</strong> @totalCount
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-hover align-middle shadow-sm border rounded">
+            <thead class="table-primary">
+                <tr>
+                    <th scope="col">First Name</th>
+                    <th scope="col">Last Name</th>
+                    <th scope="col">Email</th>
+                    <th scope="col">Age</th>
+                    <th scope="col" style="width: 200px;">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var s in Model)
+                {
+                    <tr>
+                        <td>@s.FirstName</td>
+                        <td>@s.LastName</td>
+                        <td>@s.Email</td>
+                        <td>@s.Age</td>
+                        <td>
+                            <div class="btn-group" role="group">
+                                <a asp-action="Details" asp-route-id="@s.Id" class="btn btn-sm btn-info text-white">
+                                    <i class="bi bi-eye-fill"></i> Details
+                                </a> &nbsp;
+                                <a asp-action="Edit" asp-route-id="@s.Id" class="btn btn-sm btn-warning">
+                                    <i class="bi bi-pencil-square"></i> Edit
+                                </a> &nbsp;
+                                <a asp-action="Delete" asp-route-id="@s.Id" class="btn btn-sm btn-danger">
+                                    <i class="bi bi-trash-fill"></i> Delete
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+
+</div>
