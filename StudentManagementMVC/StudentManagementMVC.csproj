@@ -23,6 +23,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Folder Include="page_screenshot\" />
     <Folder Include="Views\Home\" />
   </ItemGroup>
 
